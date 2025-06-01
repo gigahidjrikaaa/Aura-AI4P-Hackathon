@@ -6,6 +6,9 @@ from pydantic import BaseModel, Field
 from typing import List
 import os
 from dotenv import load_dotenv
+from google import genai
+import json
+from fastapi import HTTPException
 
 # Load environment variables from .env file
 load_dotenv()
@@ -47,15 +50,66 @@ class AnalysisRequest(BaseModel):
 def read_root():
     return {"status": "Aura API is running"}
 
-# Placeholder for our main endpoint
+PROMPT_TEMPLATE = """
+You are "Aura," an expert data scientist specializing in personal informatics and well-being. Your task is to analyze a JSON array of daily emotional and energetic check-ins from a user. Your goal is to identify meaningful, actionable, and non-obvious patterns, correlations, and trends over time.
+
+**Your Task:**
+Analyze the following JSON data. Your response MUST be in Markdown and STRICTLY follow this structure:
+
+### Your Aura Report: Insights from the Past {X} Days
+
+**Overall Trend:**
+* Briefly describe the general trend of mood and energy over the period. Is it stable, improving, declining? Mention any weekly cycles (e.g., "weekend boost").
+
+**Key Correlations We've Found:**
+* Identify up to 3 strong positive or negative correlations. Be specific.
+* Example Positive: "There is a strong link between days tagged 'exercise' and a higher mood score the next day."
+* Example Negative: "Days following a 'poor-sleep' tag consistently show a 3-point drop in energy."
+
+**Trigger Pattern Identified:**
+* Look for sequences. Does a specific event or tag consistently lead to a negative outcome 1-2 days later?
+* Example: "On 3 out of 4 occasions where your notes mentioned 'deadline', your mood dropped significantly on that day."
+
+**Recurring Theme:**
+* Analyze the text in the 'note' field. Are there recurring words or concepts? (e.g., "lonely," "procrastination," "unappreciated").
+
+**Your Emotional Weather Forecast:**
+* Based on the patterns, provide one forward-looking, actionable piece of advice. It should be proactive, not reactive.
+* Example: "Given the consistent mood dip on Wednesdays, consider scheduling a non-work related, enjoyable activity on Tuesday evenings."
+
+**Data Provided:**
+\"\"\"
+{jsonData}
+\"\"\"
+"""
+
 @app.post("/api/v1/analyze-patterns")
 async def analyze_patterns(request: AnalysisRequest):
-    # For now, just echo back the number of entries received
     gemini_api_key = os.getenv("GEMINI_API_KEY")
     if not gemini_api_key:
-        return {"error": "GEMINI_API_KEY not found"}
-
-    return {
-        "message": f"Received {len(request.entries)} entries for analysis.",
-        "apiKeyFound": True
-    }
+        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not found")
+    
+    try:
+        # Configure Gemini
+        # Explicitly configure the Gemini API key
+        client = genai.Client(api_key=gemini_api_key)
+        
+        # Convert entries to JSON for the prompt
+        entries_json = json.dumps([entry.model_dump() for entry in request.entries], indent=2)
+        days_count = len(request.entries)
+        
+        # Format the prompt
+        prompt = PROMPT_TEMPLATE.replace("{jsonData}", entries_json).replace("{X}", str(days_count))
+        
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        ) 
+        
+        return {
+            "analysis": response.text,
+            "entries_analyzed": len(request.entries)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
