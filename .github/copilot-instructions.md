@@ -136,3 +136,24 @@ For Backend Endpoints:
 For Backend Setup:
 
 "Create the basic main.py file for our FastAPI application. Include the necessary CORS middleware configuration to allow requests from http://localhost:3000."
+
+-------
+
+# Full Story of Aura Project:
+In a world saturated with noise, where external demands constantly pull at our attention, the journey toward self-awareness has become both more critical and more difficult. The hackathon's theme, "Peace with Oneself," speaks to a fundamental human need: to understand the currents of our own minds and find a sense of calm amidst the chaos. We observed that most digital wellness tools are reactive; they offer a bandage during a moment of crisis—a guided meditation for an anxiety attack, a breathing exercise for stress. While valuable, they treat the symptoms, not the underlying system. True, sustainable peace comes from understanding the patterns, the subtle, longitudinal rhythms of our own lives. It comes from answering not just "Why do I feel bad right now?" but "What conditions in my life cultivate my well-being, and what conditions erode it?"
+
+This is the problem Aura was conceived to solve.
+
+Aura is not a journal, nor is it a therapist. It is an intelligent emotional barometer; a private, proactive partner in self-discovery. We envision it as a "weather forecast for the soul." Just as you'd check the weather to decide if you need a jacket, you would consult Aura to understand the climate of your inner world. The experience is designed to be one of quiet, consistent reflection, not demanding intervention.
+
+Each day, the user is invited to a frictionless, 30-second check-in: a simple rating of their mood and energy, a single sentence about a high or low point, and optional tags like work, family, or poor-sleep. This act is intentionally minimal, designed to become a moment of effortless ritual. This data, this stream of personal history, is Aura's foundation. And in line with our core philosophy, it is a foundation built on absolute trust.
+
+The technical architecture is a direct reflection of this philosophy. Aura is built on a privacy-first, stateless model. All check-in data is stored exclusively on the user's own device, in their browser's local storage. It never touches our servers for storage; it is theirs and theirs alone. The frontend, a fluid and responsive application built with Next.js, manages this private data store. When the user is ready for insight, this data is sent for a single, in-flight analysis to our backend. This backend, a robust and efficient FastAPI service, acts as a secure and stateless conduit. Its sole purpose is to receive the data, communicate with the Google Gemini AI, and relay the resulting analysis back to the user before wiping the context. There is no user database to breach, no sensitive history to leak.
+
+The magic happens when the user asks, "Reveal My Aura." The application sends weeks of accumulated data to the AI, which acts not as a friend, but as a compassionate, insightful data scientist. It performs a longitudinal synthesis, returning a report that highlights the invisible connections in a user's life. It might be the non-obvious link between days tagged social and a spike in creative energy two days later, or a recurring dip in mood on the days following poor sleep. It finds the signal in the noise.
+
+For this hackathon, we built this core experience. We established a clean, professional monorepo structure to house our decoupled frontend and backend, ensuring we could move quickly without sacrificing quality. We created the seamless data-entry UI, the secure API endpoint, and the powerful AI prompt that turns raw data into human wisdom.
+
+The vision for Aura extends beyond this initial build. We see a future where it can provide gentle, proactive nudges: "I've noticed your energy levels have trended down for three consecutive days. The last time this happened, a walk in the park helped." We imagine integrations with calendars—not to surveil, but to correlate, helping a user see how different types of events impact their well-being.
+
+Ultimately, Aura is a tool to empower individuals to move from being passive passengers in their emotional lives to becoming active, informed navigators. It provides the map and the compass, built from their own unique data, to help them chart a course toward a more consistent and authentic state of peace—a peace found not by silencing the world, but by understanding oneself.
