@@ -44,10 +44,11 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Mood Slider */}
         <div>
-          <label className="block text-[var(--color-text-primary)] font-medium mb-2">
+          <label htmlFor="mood-slider" className="block text-[var(--color-text-primary)] font-medium mb-2">
             Mood: {mood}/10
           </label>
           <input
+            id="mood-slider"
             type="range"
             min="1"
             max="10"
@@ -60,13 +61,13 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
             <span>High</span>
           </div>
         </div>
-
         {/* Energy Slider */}
         <div>
-          <label className="block text-[var(--color-text-primary)] font-medium mb-2">
+          <label htmlFor="energy-slider" className="block text-[var(--color-text-primary)] font-medium mb-2">
             Energy: {energy}/10
           </label>
           <input
+            id="energy-slider"
             type="range"
             min="1"
             max="10"
@@ -79,13 +80,13 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
             <span>High</span>
           </div>
         </div>
-
         {/* Note Input */}
         <div>
-          <label className="block text-[var(--color-text-primary)] font-medium mb-2">
+          <label htmlFor="note-input" className="block text-[var(--color-text-primary)] font-medium mb-2">
             Note (optional)
           </label>
           <textarea
+            id="note-input"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="How are you feeling today? Any highlights or challenges?"
@@ -93,13 +94,13 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
             rows={3}
           />
         </div>
-
         {/* Tags Input */}
         <div>
-          <label className="block text-[var(--color-text-primary)] font-medium mb-2">
+          <label htmlFor="tags-input" className="block text-[var(--color-text-primary)] font-medium mb-2">
             Tags (optional)
           </label>
           <input
+            id="tags-input"
             type="text"
             value={tagsInput}
             onChange={(e) => setTagsInput(e.target.value)}

@@ -27,7 +27,7 @@ export default function AuraReport({ analysis }: AuraReportProps) {
             .replace(/### (.*?)$/gm, '<h3 class="text-xl font-semibold text-[var(--color-accent)] mt-6 mb-4">$1</h3>')
             .replace(/\*\*([^*]+):\*\*/g, '<strong class="text-[var(--color-text-primary)]">$1:</strong>')
             .replace(/\* (.*?)$/gm, '<li class="text-[var(--color-text-primary)] mb-2">$1</li>')
-            .replace(/(<li.*?>.*?<\/li>)+/gs, '<ul class="list-disc list-inside space-y-2 mb-4">$&</ul>')
+            .replace(/(<li[\s\S]*?>[\s\S]*?<\/li>)+/g, '<ul class="list-disc list-inside space-y-2 mb-4">$&</ul>')
         }}
       />
     </div>
