@@ -10,6 +10,7 @@ import EntryList from '@/components/features/EntryList';
 import MomentumIndicator from '@/components/features/MomentumIndicator';
 import SmartInterventions from '@/components/features/SmartInterventions';
 import MicroMomentCapture from '@/components/features/MicroMomentCapture';
+import DailyHealing from '@/components/features/DailyHealing';
 
 export default function Home() {
   const [entries, setEntries] = useLocalStorage<IEntry[]>('aura-entries', []);
@@ -158,7 +159,7 @@ export default function Home() {
               energy levels, and thoughts to reveal insights about your inner cosmos.
             </p>
             <p className="text-[var(--color-accent-soft)] text-sm italic max-w-md mx-auto">
-              "{getAuraQuote()}"
+              &quot;{getAuraQuote()}&quot;
             </p>
           </div>
         </header>
@@ -169,6 +170,9 @@ export default function Home() {
             <MomentumIndicator entries={entries} />
           </div>
         )}
+
+        {/* Daily Healing Wisdom */}
+        <DailyHealing />
 
         {/* Smart Interventions */}
         {entries.length > 0 && (
@@ -261,7 +265,7 @@ export default function Home() {
               🌠 Discover Your Emotional Universe
             </h2>
             <p className="text-[var(--color-text-secondary)] mb-6 max-w-2xl mx-auto leading-relaxed">
-              When you're ready, let our AI constellation mapper analyze your emotional journey to reveal 
+              When you&apos;re ready, let our AI constellation mapper analyze your emotional journey to reveal 
               hidden patterns, cosmic correlations, and provide your personalized emotional weather forecast 
               from the depths of space.
             </p>

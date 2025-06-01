@@ -14,7 +14,7 @@ export default function AuraReport({ analysis }: AuraReportProps) {
       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-[var(--color-text-primary)]">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="text-[var(--color-accent-soft)]">$1</em>')
       .replace(/\* (.*?)$/gm, '<li class="text-[var(--color-text-primary)] mb-3 flex items-start"><span class="text-[var(--color-accent)] mr-2 mt-1">→</span><span>$1</span></li>')
-      .replace(/(<li.*?>.*?<\/li>)+/gs, '<ul class="space-y-2 mb-6 ml-4">$&</ul>')
+      .replace(/(<li[\s\S]*?>[\s\S]*?<\/li>)+/g, '<ul class="space-y-2 mb-6 ml-4">$&</ul>')
       .replace(/^(?!<[hl]|<ul)(.+)$/gm, '<p class="text-[var(--color-text-primary)] leading-relaxed mb-4">$1</p>');
   };
 

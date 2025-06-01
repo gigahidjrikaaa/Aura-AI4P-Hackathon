@@ -71,7 +71,7 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
         {/* Mood Slider */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <label className="text-[var(--color-text-primary)] font-medium flex items-center">
+            <label htmlFor="mood-slider" className="text-[var(--color-text-primary)] font-medium flex items-center">
               <span className="text-2xl mr-3">{getMoodEmoji(mood)}</span>
               Mood
             </label>
@@ -82,6 +82,7 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
           
           <div className="relative">
             <input
+              id="mood-slider"
               type="range"
               min="1"
               max="10"
@@ -96,11 +97,10 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
             </div>
           </div>
         </div>
-
         {/* Energy Slider */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <label className="text-[var(--color-text-primary)] font-medium flex items-center">
+            <label htmlFor="energy-slider" className="text-[var(--color-text-primary)] font-medium flex items-center">
               <span className="text-2xl mr-3">{getEnergyEmoji(energy)}</span>
               Energy
             </label>
@@ -111,6 +111,7 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
           
           <div className="relative">
             <input
+              id="energy-slider"
               type="range"
               min="1"
               max="10"
@@ -120,32 +121,32 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
             />
             <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-2 px-1">
               <span>Drained</span>
+              <span>Drained</span>
               <span>Balanced</span>
               <span>Energized</span>
             </div>
           </div>
         </div>
-
         {/* Note Input */}
         <div className="space-y-3">
-          <label className="block text-[var(--color-text-primary)] font-medium">
-            Reflection (optional)
+          <label htmlFor="note-input" className="block text-[var(--color-text-primary)] font-medium">
           </label>
           <textarea
+            id="note-input"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="What's on your mind? Any highlights, challenges, or observations from today..."
             className="w-full px-4 py-3 bg-[var(--color-surface)] text-[var(--color-text-primary)] border border-[var(--color-accent)] border-opacity-20 rounded-xl focus:outline-none focus:border-[var(--color-accent)] focus:glow-soft transition-all duration-200 resize-none"
             rows={3}
-          />
+          ></textarea>
         </div>
-
         {/* Tags Input */}
         <div className="space-y-3">
-          <label className="block text-[var(--color-text-primary)] font-medium">
+          <label htmlFor="tags-input" className="block text-[var(--color-text-primary)] font-medium">
             Context Tags (optional)
           </label>
           <input
+            id="tags-input"
             type="text"
             value={tagsInput}
             onChange={(e) => setTagsInput(e.target.value)}

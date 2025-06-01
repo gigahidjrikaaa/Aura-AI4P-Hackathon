@@ -19,7 +19,16 @@ export default function MicroMomentCapture() {
     const [intensity, setIntensity] = useState<number>(3); // Default intensity 1-5
     const [trigger, setTrigger] = useState<string>('');
 
-    const emotions = ['joy', 'anxiety', 'focus', 'frustration', 'calm', 'excitement', 'sadness', 'content'];
+    const emotions = [
+        // Core emotions
+        'joy', 'calm', 'content', 'grateful',
+        // Trauma-related emotions
+        'triggered', 'overwhelmed', 'dissociated', 'hypervigilant',
+        // Healing emotions  
+        'grounded', 'safe', 'connected', 'empowered',
+        // Processing emotions
+        'angry', 'sad', 'fearful', 'numb'
+    ];
 
     const handleTogglePanel = () => {
         setIsPanelOpen(!isPanelOpen);
