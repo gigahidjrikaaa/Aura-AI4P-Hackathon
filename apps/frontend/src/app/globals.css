@@ -1,20 +1,233 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: oklch(0.17 0.03 234.38);
-  --color-text-primary: oklch(0.95 0.02 234.38);
-  --color-text-secondary: oklch(0.6 0.02 234.38);
-  --color-accent: oklch(0.7 0.15 275);
-  --color-surface: oklch(0.25 0.03 234.38);
+  --color-background: oklch(0.08 0.02 240);
+  --color-text-primary: oklch(0.98 0.01 240);
+  --color-text-secondary: oklch(0.65 0.03 240);
+  --color-accent: oklch(0.75 0.12 280);
+  --color-accent-soft: oklch(0.85 0.08 280);
+  --color-surface: oklch(0.12 0.03 240);
+  --color-surface-elevated: oklch(0.15 0.03 240);
   --color-success: oklch(0.7 0.15 142);
   --color-warning: oklch(0.8 0.15 60);
   --color-error: oklch(0.65 0.2 25);
+  --color-glow: oklch(0.75 0.12 280);
 }
 
 body {
-  background-color: var(--color-background);
+  background: 
+    radial-gradient(ellipse at 20% 30%, oklch(0.15 0.08 280 / 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, oklch(0.12 0.06 300 / 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, oklch(0.1 0.04 260 / 0.25) 0%, transparent 50%),
+    linear-gradient(135deg, oklch(0.03 0.02 240) 0%, oklch(0.08 0.03 280) 50%, oklch(0.05 0.02 260) 100%);
   color: var(--color-text-primary);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Space background elements */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+.star-small {
+  width: 1px;
+  height: 1px;
+}
+
+.star-medium {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 6px oklch(0.9 0.1 280);
+}
+
+.star-large {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 10px oklch(0.85 0.12 280);
+}
+
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Shooting stars */
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(45deg, oklch(0.9 0.1 280), transparent);
+  border-radius: 50%;
+  animation: shoot 3s linear infinite;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translateX(-100px) translateY(100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(-100px);
+    opacity: 0;
+  }
+}
+
+/* Distant planets */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: orbit 20s linear infinite;
+}
+
+.planet-1 {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 30% 30%, oklch(0.6 0.15 280), oklch(0.3 0.1 280));
+  top: 20%;
+  right: 10%;
+  animation-duration: 25s;
+  box-shadow: 0 0 20px oklch(0.6 0.15 280 / 0.4);
+}
+
+.planet-2 {
+  width: 25px;
+  height: 25px;
+  background: radial-gradient(circle at 40% 40%, oklch(0.5 0.12 300), oklch(0.2 0.08 300));
+  top: 60%;
+  left: 5%;
+  animation-duration: 30s;
+  animation-direction: reverse;
+  box-shadow: 0 0 15px oklch(0.5 0.12 300 / 0.3);
+}
+
+.planet-3 {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle at 35% 35%, oklch(0.4 0.1 260), oklch(0.15 0.06 260));
+  bottom: 30%;
+  right: 20%;
+  animation-duration: 35s;
+  box-shadow: 0 0 10px oklch(0.4 0.1 260 / 0.25);
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+
+/* Nebula effect */
+.nebula {
+  position: absolute;
+  background: radial-gradient(ellipse, oklch(0.3 0.1 280 / 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: nebula-drift 15s ease-in-out infinite;
+}
+
+.nebula-1 {
+  width: 300px;
+  height: 200px;
+  top: 10%;
+  left: 20%;
+  animation-delay: -5s;
+}
+
+.nebula-2 {
+  width: 250px;
+  height: 150px;
+  bottom: 20%;
+  right: 10%;
+  animation-delay: -10s;
+  background: radial-gradient(ellipse, oklch(0.25 0.08 300 / 0.08) 0%, transparent 70%);
+}
+
+@keyframes nebula-drift {
+  0%, 100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  33% {
+    transform: translateX(20px) translateY(-10px) scale(1.1);
+  }
+  66% {
+    transform: translateX(-15px) translateY(15px) scale(0.9);
+  }
+}
+
+/* Enhanced glowing effects */
+.glow-soft {
+  box-shadow: 0 0 20px oklch(0.75 0.12 280 / 0.3);
+}
+
+.glow-medium {
+  box-shadow: 0 0 30px oklch(0.75 0.12 280 / 0.4), 0 0 60px oklch(0.75 0.12 280 / 0.2);
+}
+
+.glow-strong {
+  box-shadow: 0 0 40px oklch(0.75 0.12 280 / 0.6), 0 0 80px oklch(0.75 0.12 280 / 0.3);
+}
+
+.glow-cosmic {
+  box-shadow: 
+    0 0 30px oklch(0.75 0.12 280 / 0.5),
+    0 0 60px oklch(0.7 0.1 300 / 0.3),
+    0 0 90px oklch(0.65 0.08 260 / 0.2);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse animation for accent elements */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px oklch(0.75 0.12 280 / 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px oklch(0.75 0.12 280 / 0.5), 0 0 80px oklch(0.75 0.12 280 / 0.2);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 /* Custom slider styles */
@@ -26,6 +239,7 @@ body {
   background: var(--color-accent);
   cursor: pointer;
   border: 2px solid var(--color-background);
+  box-shadow: 0 0 15px oklch(0.75 0.12 280 / 0.5);
 }
 
 .slider::-moz-range-thumb {
@@ -35,33 +249,77 @@ body {
   background: var(--color-accent);
   cursor: pointer;
   border: 2px solid var(--color-background);
+  box-shadow: 0 0 15px oklch(0.75 0.12 280 / 0.5);
 }
 
 .slider::-webkit-slider-track {
-  background: var(--color-background);
+  background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-accent-soft) 50%, var(--color-accent) 100%);
   border-radius: 10px;
+  height: 8px;
 }
 
 .slider::-moz-range-track {
-  background: var(--color-background);
+  background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-accent-soft) 50%, var(--color-accent) 100%);
   border-radius: 10px;
+  height: 8px;
 }
 
-/* Scrollbar styling for entry list */
-.space-y-4::-webkit-scrollbar {
+/* Scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
 
-.space-y-4::-webkit-scrollbar-track {
-  background: var(--color-background);
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-surface);
   border-radius: 4px;
 }
 
-.space-y-4::-webkit-scrollbar-thumb {
-  background: var(--color-text-secondary);
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-accent-soft), var(--color-accent));
   border-radius: 4px;
 }
 
-.space-y-4::-webkit-scrollbar-thumb:hover {
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: oklch(0.15 0.03 240 / 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid oklch(0.75 0.12 280 / 0.2);
+}
+
+/* Breathing animation for meditation-like feel */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Title text effects */
+.cosmic-text {
+  background: linear-gradient(45deg, 
+    oklch(0.85 0.12 280), 
+    oklch(0.9 0.1 300), 
+    oklch(0.8 0.15 260),
+    oklch(0.85 0.12 280)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cosmic-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes cosmic-shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }

@@ -35,87 +35,140 @@ export default function CheckInForm({ onSubmit }: CheckInFormProps) {
     setTagsInput('');
   };
 
+  const getMoodEmoji = (value: number) => {
+    if (value <= 2) return '😔';
+    if (value <= 4) return '😐';
+    if (value <= 6) return '🙂';
+    if (value <= 8) return '😊';
+    return '😄';
+  };
+
+  const getEnergyEmoji = (value: number) => {
+    if (value <= 2) return '🪫';
+    if (value <= 4) return '🔋';
+    if (value <= 6) return '⚡';
+    if (value <= 8) return '✨';
+    return '🌟';
+  };
+
   return (
-    <div className="bg-[var(--color-surface)] p-6 rounded-lg">
-      <h2 className="text-2xl font-semibold mb-6 text-[var(--color-text-primary)]">
-        Daily Check-in
-      </h2>
+    <div>
+      <div className="flex items-center mb-8">
+        <div className="p-3 rounded-full bg-[var(--color-accent)] bg-opacity-20 glow-soft mr-4">
+          <span className="text-2xl">📝</span>
+        </div>
+        <div>
+          <h2 className="text-2xl font-light text-[var(--color-text-primary)] mb-1">
+            Daily Reflection
+          </h2>
+          <p className="text-[var(--color-text-secondary)] text-sm">
+            Take a moment to check in with yourself
+          </p>
+        </div>
+      </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Mood Slider */}
-        <div>
-          <label htmlFor="mood-slider" className="block text-[var(--color-text-primary)] font-medium mb-2">
-            Mood: {mood}/10
-          </label>
-          <input
-            id="mood-slider"
-            type="range"
-            min="1"
-            max="10"
-            value={mood}
-            onChange={(e) => setMood(Number(e.target.value))}
-            className="w-full h-2 bg-[var(--color-background)] rounded-lg appearance-none cursor-pointer slider"
-          />
-          <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-1">
-            <span>Low</span>
-            <span>High</span>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-[var(--color-text-primary)] font-medium flex items-center">
+              <span className="text-2xl mr-3">{getMoodEmoji(mood)}</span>
+              Mood
+            </label>
+            <div className="text-[var(--color-accent)] font-medium text-lg">
+              {mood}/10
+            </div>
+          </div>
+          
+          <div className="relative">
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={mood}
+              onChange={(e) => setMood(Number(e.target.value))}
+              className="w-full slider"
+            />
+            <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-2 px-1">
+              <span>Struggling</span>
+              <span>Neutral</span>
+              <span>Thriving</span>
+            </div>
           </div>
         </div>
+
         {/* Energy Slider */}
-        <div>
-          <label htmlFor="energy-slider" className="block text-[var(--color-text-primary)] font-medium mb-2">
-            Energy: {energy}/10
-          </label>
-          <input
-            id="energy-slider"
-            type="range"
-            min="1"
-            max="10"
-            value={energy}
-            onChange={(e) => setEnergy(Number(e.target.value))}
-            className="w-full h-2 bg-[var(--color-background)] rounded-lg appearance-none cursor-pointer slider"
-          />
-          <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-1">
-            <span>Low</span>
-            <span>High</span>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-[var(--color-text-primary)] font-medium flex items-center">
+              <span className="text-2xl mr-3">{getEnergyEmoji(energy)}</span>
+              Energy
+            </label>
+            <div className="text-[var(--color-success)] font-medium text-lg">
+              {energy}/10
+            </div>
+          </div>
+          
+          <div className="relative">
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={energy}
+              onChange={(e) => setEnergy(Number(e.target.value))}
+              className="w-full slider"
+            />
+            <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-2 px-1">
+              <span>Drained</span>
+              <span>Balanced</span>
+              <span>Energized</span>
+            </div>
           </div>
         </div>
+
         {/* Note Input */}
-        <div>
-          <label htmlFor="note-input" className="block text-[var(--color-text-primary)] font-medium mb-2">
-            Note (optional)
+        <div className="space-y-3">
+          <label className="block text-[var(--color-text-primary)] font-medium">
+            Reflection (optional)
           </label>
           <textarea
-            id="note-input"
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            placeholder="How are you feeling today? Any highlights or challenges?"
-            className="w-full px-3 py-2 bg-[var(--color-background)] text-[var(--color-text-primary)] border border-[var(--color-text-secondary)] rounded-lg focus:outline-none focus:border-[var(--color-accent)] resize-none"
+            placeholder="What's on your mind? Any highlights, challenges, or observations from today..."
+            className="w-full px-4 py-3 bg-[var(--color-surface)] text-[var(--color-text-primary)] border border-[var(--color-accent)] border-opacity-20 rounded-xl focus:outline-none focus:border-[var(--color-accent)] focus:glow-soft transition-all duration-200 resize-none"
             rows={3}
           />
         </div>
+
         {/* Tags Input */}
-        <div>
-          <label htmlFor="tags-input" className="block text-[var(--color-text-primary)] font-medium mb-2">
-            Tags (optional)
+        <div className="space-y-3">
+          <label className="block text-[var(--color-text-primary)] font-medium">
+            Context Tags (optional)
           </label>
           <input
-            id="tags-input"
             type="text"
             value={tagsInput}
             onChange={(e) => setTagsInput(e.target.value)}
-            placeholder="work, exercise, social, poor-sleep (comma-separated)"
-            className="w-full px-3 py-2 bg-[var(--color-background)] text-[var(--color-text-primary)] border border-[var(--color-text-secondary)] rounded-lg focus:outline-none focus:border-[var(--color-accent)]"
+            placeholder="work, exercise, social, travel, stress, celebration..."
+            className="w-full px-4 py-3 bg-[var(--color-surface)] text-[var(--color-text-primary)] border border-[var(--color-accent)] border-opacity-20 rounded-xl focus:outline-none focus:border-[var(--color-accent)] focus:glow-soft transition-all duration-200"
           />
+          <p className="text-xs text-[var(--color-text-secondary)] opacity-75">
+            Add comma-separated tags to help identify patterns
+          </p>
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-[var(--color-accent)] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
-        >
-          Save Check-in
-        </button>
+        <div className="pt-4">
+          <button
+            type="submit"
+            className="w-full bg-[var(--color-accent)] text-white py-4 rounded-xl font-medium text-lg hover:glow-medium hover:bg-opacity-90 transition-all duration-300 glow-soft"
+          >
+            <span className="flex items-center justify-center">
+              <span className="mr-2">✨</span>
+              Save Check-in
+            </span>
+          </button>
+        </div>
       </form>
     </div>
   );
