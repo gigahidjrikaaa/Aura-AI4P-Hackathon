@@ -23,8 +23,7 @@ app = FastAPI()
 # This is crucial for allowing the Next.js frontend to communicate with this API.
 origins = [
     "http://localhost:3000",
-    # In a real production environment, you would add your deployed frontend URL here
-    # "https://your-aura-app.vercel.app",
+    "https://aura-ai4p-hackathon-backend.onrender.com",
 ]
 
 app.add_middleware(
