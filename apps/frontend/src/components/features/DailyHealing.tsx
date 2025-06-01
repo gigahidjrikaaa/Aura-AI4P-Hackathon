@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 
 export default function DailyHealing() {
   const [healingMessage, setHealingMessage] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
   const healingMessages = useMemo(() => [
     "🌱 Healing is not linear. Every step forward, even the small ones, is progress.",
@@ -19,10 +20,36 @@ export default function DailyHealing() {
   ], []);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     const today = new Date().getDate();
     const messageIndex = today % healingMessages.length;
     setHealingMessage(healingMessages[messageIndex]);
-  }, [healingMessages]);
+  }, [healingMessages, isClient]);
+
+  // Don't render content until client-side hydration is complete
+  if (!isClient) {
+    return (
+      <div className="glass p-6 rounded-xl glow-soft mb-6">
+        <div className="flex items-center mb-4">
+          <div className="p-3 rounded-full bg-[var(--color-accent)] bg-opacity-20 glow-soft mr-4">
+            <span className="text-2xl">🌟</span>
+          </div>
+          <h3 className="text-lg font-medium text-[var(--color-accent)]">
+            Today&apos;s Healing Wisdom
+          </h3>
+        </div>
+        
+        <p className="text-[var(--color-text-primary)] leading-relaxed text-center italic">
+          Loading today&apos;s message...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="glass p-6 rounded-xl glow-soft mb-6">

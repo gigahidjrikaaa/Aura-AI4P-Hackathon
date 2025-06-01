@@ -28,6 +28,15 @@ interface DayPrediction {
 }
 
 export default function AdvancedForecasting({ entries }: AdvancedForecastingProps) {
+  // Create a seeded random function for consistent results
+  const createSeededRandom = (seed: number) => {
+    let currentSeed = seed;
+    return () => {
+      currentSeed = (currentSeed * 9301 + 49297) % 233280;
+      return currentSeed / 233280;
+    };
+  };
+
   const generateAdvancedForecasts = (): ForecastModel[] => {
     const models: ForecastModel[] = [];
 
@@ -239,6 +248,9 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
     const recentMood = entries.slice(0, 3).reduce((sum, e) => sum + e.mood, 0) / Math.min(3, entries.length);
     const recentEnergy = entries.slice(0, 3).reduce((sum, e) => sum + e.energy, 0) / Math.min(3, entries.length);
 
+    // Use seeded random for consistent predictions
+    const seededRandom = createSeededRandom(entries.length * 42); // Use entries length as part of seed
+
     const today = new Date();
     for (let i = 1; i <= 14; i++) {
       const forecastDate = new Date(today);
@@ -248,8 +260,8 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
       const volatilityFactor = Math.min(1, avgVolatility / 3);
       const uncertainty = volatilityStd * volatilityFactor * (i / 14); // Uncertainty grows over time
       
-      const predictedMood = Math.max(1, Math.min(10, recentMood + (Math.random() - 0.5) * uncertainty));
-      const predictedEnergy = Math.max(1, Math.min(10, recentEnergy + (Math.random() - 0.5) * uncertainty));
+      const predictedMood = Math.max(1, Math.min(10, recentMood + (seededRandom() - 0.5) * uncertainty));
+      const predictedEnergy = Math.max(1, Math.min(10, recentEnergy + (seededRandom() - 0.5) * uncertainty));
       
       const confidence = Math.max(0.3, 0.8 - (volatilityFactor * 0.4) - (i * 0.02));
 
@@ -466,7 +478,7 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
               <div className="space-y-1 text-xs">
                 {model.predictions.slice(0, 3).map((pred, i) => (
                   <div key={i} className="flex items-start justify-between">
-                    <span className="text-[var(--color-text-secondary)]">
+                    <span className="text-[var(--color-text-secondary]">
                       {pred.dayName}: {pred.reasoning}
                     </span>
                     <span className="text-[var(--color-accent)]">

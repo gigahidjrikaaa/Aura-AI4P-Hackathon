@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { IEntry } from '@/types/entry';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { analyzePatterns, AnalysisResponse } from '@/services/api';
@@ -64,18 +65,28 @@ export default function Home() {
 
   const visibleFeatures = getVisibleFeatures();
 
-  // Create dynamic stars on component mount
+  // Create dynamic stars on component mount - ONLY on client side
   useEffect(() => {
+    // Only run on client side to prevent hydration mismatch
+    if (!isClient) return;
+
     const createStars = () => {
       const starsContainer = document.querySelector('.stars-container');
       if (!starsContainer) return;
 
       starsContainer.innerHTML = '';
 
+      // Use seeded random for consistent star positions during client render
+      let seed = 12345; // Fixed seed for consistency
+      const seededRandom = () => {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      };
+
       // Create fewer, more purposeful stars to reduce visual noise
       for (let i = 0; i < 60; i++) {
         const star = document.createElement('div');
-        const size = Math.random();
+        const size = seededRandom();
         
         if (size < 0.8) {
           star.className = 'star star-small';
@@ -83,10 +94,10 @@ export default function Home() {
           star.className = 'star star-medium';
         }
         
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        star.style.animationDuration = (2 + Math.random() * 2) + 's';
+        star.style.left = seededRandom() * 100 + '%';
+        star.style.top = seededRandom() * 100 + '%';
+        star.style.animationDelay = seededRandom() * 3 + 's';
+        star.style.animationDuration = (2 + seededRandom() * 2) + 's';
         
         starsContainer.appendChild(star);
       }
@@ -103,7 +114,7 @@ export default function Home() {
     };
 
     createStars();
-  }, []);
+  }, [isClient]);
 
   const handleNewEntry = (entryData: Omit<IEntry, 'id' | 'date'>) => {
     const newEntry: IEntry = {
@@ -115,9 +126,74 @@ export default function Home() {
     setCurrentMood(entryData.mood);
     setCurrentEnergy(entryData.energy);
     
-    // Auto navigate to history if enough entries exist
-    if (entries.length >= 2) {
-      setActiveTab('history');
+    // Show success toast with entry number
+    const entryNumber = entries.length + 1;
+    toast.success(`Entry ${entryNumber} successfully made! ✨`, {
+      duration: 4000,
+      position: 'bottom-right',
+      style: {
+        background: 'var(--color-surface)',
+        color: 'var(--color-text-primary)',
+        border: '1px solid var(--color-accent)',
+        borderRadius: '12px',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+      },
+      icon: '🌟',
+    });
+
+    // Show milestone celebration for specific milestones
+    if (entryNumber === 1) {
+      setTimeout(() => {
+        toast('🌌 Welcome to your emotional universe! Your journey begins.', {
+          duration: 5000,
+          position: 'bottom-right',
+          style: {
+            background: 'var(--color-accent)',
+            color: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          },
+        });
+      }, 1000);
+    } else if (entryNumber === 3) {
+      setTimeout(() => {
+        toast('🔮 Constellation unlocked! You can now reveal patterns.', {
+          duration: 5000,
+          position: 'bottom-right',
+          style: {
+            background: 'var(--color-success)',
+            color: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          },
+        });
+      }, 1000);
+    } else if (entryNumber === 7) {
+      setTimeout(() => {
+        toast('🌌 Galaxy achieved! Advanced forecasting available.', {
+          duration: 5000,
+          position: 'bottom-right',
+          style: {
+            background: 'var(--color-accent)',
+            color: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          },
+        });
+      }, 1000);
+    } else if (entryNumber === 14) {
+      setTimeout(() => {
+        toast('🧪 Master level reached! Expert Mode unlocked!', {
+          duration: 6000,
+          position: 'bottom-right',
+          style: {
+            background: 'linear-gradient(135deg, var(--color-accent), var(--color-success))',
+            color: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          },
+        });
+      }, 1000);
     }
   };
 
@@ -134,8 +210,32 @@ export default function Home() {
       const result = await analyzePatterns(entries);
       setAnalysis(result);
       setActiveTab('insights');
+      
+      // Success toast for analysis
+      toast.success('🌠 Your Aura patterns have been revealed!', {
+        duration: 4000,
+        position: 'bottom-right',
+        style: {
+          background: 'var(--color-accent)',
+          color: 'white',
+          borderRadius: '12px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        },
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to analyze patterns');
+      
+      // Error toast
+      toast.error('Failed to analyze patterns. Please try again.', {
+        duration: 4000,
+        position: 'bottom-right',
+        style: {
+          background: 'var(--color-error)',
+          color: 'white',
+          borderRadius: '12px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        },
+      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -315,7 +415,7 @@ export default function Home() {
 
           {/* Additional features preview */}
           <div className="p-4 bg-[var(--color-accent)] bg-opacity-5 rounded-lg border border-[var(--color-accent)] border-opacity-20">
-            <div className="text-xs text-white space-y-1">
+            <div className="text-xs text-[var(--color-text-secondary)] space-y-1">
               <div className="flex items-center justify-center">
                 <span className="mr-2">💾</span>
                 <span>Data Export Tools</span>
@@ -333,7 +433,7 @@ export default function Home() {
 
           {/* Motivation message */}
           <div className="mt-6 p-3 bg-[var(--color-success)] bg-opacity-5 rounded-lg border border-[var(--color-success)] border-opacity-20">
-            <p className="text-xs text-white">
+            <p className="text-xs text-[var(--color-text-secondary)]">
               <strong className="text-[var(--color-success)]">Keep tracking!</strong> {entriesNeeded} more check-ins will unlock powerful analytics and insights that reveal the deepest patterns in your emotional journey.
             </p>
           </div>
@@ -344,6 +444,43 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)] relative overflow-x-hidden">
+      {/* Toast Container */}
+      <Toaster 
+        position="bottom-right"
+        reverseOrder={false}
+        gutter={8}
+        containerStyle={{
+          bottom: 20,
+          right: 20,
+        }}
+        toastOptions={{
+          // Default options for all toasts
+          duration: 4000,
+          style: {
+            background: 'var(--color-surface)',
+            color: 'var(--color-text-primary)',
+            border: '1px solid var(--color-accent)',
+            borderRadius: '12px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+            fontFamily: 'Inter, system-ui, sans-serif',
+          },
+          // Success toast styling
+          success: {
+            iconTheme: {
+              primary: 'var(--color-success)',
+              secondary: 'white',
+            },
+          },
+          // Error toast styling
+          error: {
+            iconTheme: {
+              primary: 'var(--color-error)',
+              secondary: 'white',
+            },
+          },
+        }}
+      />
+
       {/* Simplified Background Elements */}
       <div className="stars-container"></div>
       
