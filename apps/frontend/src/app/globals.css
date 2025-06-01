@@ -1,0 +1,15 @@
+/* apps/web/src/app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.17 0.03 234.38);
+  --color-text-primary: oklch(0.95 0.02 234.38);
+  --color-text-secondary: oklch(0.6 0.02 234.38);
+  --color-accent: oklch(0.7 0.15 275);
+  --color-surface: oklch(0.25 0.03 234.38);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
