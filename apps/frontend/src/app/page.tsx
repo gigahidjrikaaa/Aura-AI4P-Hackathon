@@ -251,6 +251,97 @@ export default function Home() {
     </div>
   );
 
+  // Expert Mode Progress Component
+  const renderExpertModeProgress = () => {
+    const entriesNeeded = 14 - entries.length;
+    const progressPercentage = (entries.length / 14) * 100;
+
+    return (
+      <div className="glass p-6 rounded-xl glow-soft border border-[var(--color-accent)] border-opacity-30">
+        <div className="text-center">
+          <div className="flex items-center justify-center mb-4">
+            <span className="text-2xl mr-3">🧪</span>
+            <h3 className="text-lg font-medium text-[var(--color-accent)]">
+              Unlock Expert Mode
+            </h3>
+          </div>
+          
+          <p className="text-[var(--color-text-secondary)] text-sm mb-6">
+            Unlock Master Stage ({entriesNeeded} more entries) for advanced features and deep-dive analytics
+          </p>
+
+          {/* Progress visualization */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs text-[var(--color-text-secondary)]">Progress to Expert Mode</span>
+              <span className="text-xs font-medium text-[var(--color-accent)]">
+                {entries.length}/14 entries
+              </span>
+            </div>
+            <div className="w-full bg-[var(--color-surface)] rounded-full h-3">
+              <div 
+                className="h-3 rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-success)] transition-all duration-500"
+                style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+              ></div>
+            </div>
+            <div className="text-xs text-[var(--color-text-secondary)] mt-1">
+              {Math.round(progressPercentage)}% complete
+            </div>
+          </div>
+
+          {/* Preview of Expert Mode features */}
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
+            <div className="p-3 bg-[var(--color-surface)] bg-opacity-50 rounded-lg border border-[var(--color-accent)] border-opacity-20">
+              <div className="text-lg mb-2">🔬</div>
+              <div className="text-sm font-medium text-[var(--color-text-primary)]">Correlation Matrix</div>
+              <div className="text-xs text-[var(--color-text-secondary)]">Advanced statistical relationships</div>
+            </div>
+            <div className="p-3 bg-[var(--color-surface)] bg-opacity-50 rounded-lg border border-[var(--color-accent)] border-opacity-20">
+              <div className="text-lg mb-2">📊</div>
+              <div className="text-sm font-medium text-[var(--color-text-primary)]">Detailed Statistics</div>
+              <div className="text-xs text-[var(--color-text-secondary)]">Deep statistical analysis</div>
+            </div>
+            <div className="p-3 bg-[var(--color-surface)] bg-opacity-50 rounded-lg border border-[var(--color-accent)] border-opacity-20">
+              <div className="text-lg mb-2">🎯</div>
+              <div className="text-sm font-medium text-[var(--color-text-primary)]">Confidence Scoring</div>
+              <div className="text-xs text-[var(--color-text-secondary)]">Pattern reliability analysis</div>
+            </div>
+            <div className="p-3 bg-[var(--color-surface)] bg-opacity-50 rounded-lg border border-[var(--color-accent)] border-opacity-20">
+              <div className="text-lg mb-2">🔮</div>
+              <div className="text-sm font-medium text-[var(--color-text-primary)]">Advanced Forecasting</div>
+              <div className="text-xs text-[var(--color-text-secondary)]">Multiple prediction models</div>
+            </div>
+          </div>
+
+          {/* Additional features preview */}
+          <div className="p-4 bg-[var(--color-accent)] bg-opacity-5 rounded-lg border border-[var(--color-accent)] border-opacity-20">
+            <div className="text-xs text-[var(--color-text-secondary)] space-y-1">
+              <div className="flex items-center justify-center">
+                <span className="mr-2">💾</span>
+                <span>Data Export Tools</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="mr-2">📈</span>
+                <span>Volatility Analysis</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="mr-2">🏷️</span>
+                <span>Tag Impact Modeling</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Motivation message */}
+          <div className="mt-6 p-3 bg-[var(--color-success)] bg-opacity-5 rounded-lg border border-[var(--color-success)] border-opacity-20">
+            <p className="text-xs text-[var(--color-text-secondary)]">
+              <strong className="text-[var(--color-success)]">Keep tracking!</strong> {entriesNeeded} more check-ins will unlock powerful analytics and insights that reveal the deepest patterns in your emotional journey.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)] relative overflow-x-hidden">
       {/* Simplified Background Elements */}
@@ -369,8 +460,9 @@ export default function Home() {
                 <EmotionalForecast entries={entries} />
               )}
 
-              {/* Advanced Features Toggle - Show when user has substantial data */}
-              {journeyStage === 'master' && entries.length >= 14 && (
+              {/* Expert Mode Section */}
+              {journeyStage === 'master' && entries.length >= 14 ? (
+                // Show Expert Mode Toggle for Master users
                 <div className="text-center mb-6">
                   <button
                     onClick={() => setShowAdvancedFeatures(!showAdvancedFeatures)}
@@ -394,9 +486,12 @@ export default function Home() {
                     Deep-dive analytics and experimental features
                   </p>
                 </div>
+              ) : (
+                // Show Expert Mode Progress for non-Master users
+                renderExpertModeProgress()
               )}
 
-              {/* Expert Mode Features - Only show when toggled */}
+              {/* Expert Mode Features - Only show when toggled and user is master */}
               {showAdvancedFeatures && journeyStage === 'master' && (
                 <div className="space-y-6">
                   {/* Correlation Matrix */}
