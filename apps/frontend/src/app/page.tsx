@@ -415,7 +415,7 @@ export default function Home() {
 
           {/* Additional features preview */}
           <div className="p-4 bg-[var(--color-accent)] bg-opacity-5 rounded-lg border border-[var(--color-accent)] border-opacity-20">
-            <div className="text-xs text-[var(--color-text-secondary)] space-y-1">
+            <div className="text-xs text-white space-y-1">
               <div className="flex items-center justify-center">
                 <span className="mr-2">💾</span>
                 <span>Data Export Tools</span>
@@ -433,7 +433,7 @@ export default function Home() {
 
           {/* Motivation message */}
           <div className="mt-6 p-3 bg-[var(--color-success)] bg-opacity-5 rounded-lg border border-[var(--color-success)] border-opacity-20">
-            <p className="text-xs text-[var(--color-text-secondary)]">
+            <p className="text-xs text-white">
               <strong className="text-[var(--color-success)]">Keep tracking!</strong> {entriesNeeded} more check-ins will unlock powerful analytics and insights that reveal the deepest patterns in your emotional journey.
             </p>
           </div>
