@@ -173,16 +173,16 @@ export default function AuraReport({ analysis }: AuraReportProps) {
 
       {/* Wisdom Footer */}
       <div className="mt-8 p-6 bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-soft)] bg-opacity-5 rounded-xl border border-[var(--color-accent)] border-opacity-20">
-        <div className="flex items-center text-[var(--color-accent)] mb-3">
+        <div className="flex items-center text-white mb-3">
           <span className="text-xl mr-2">🌟</span>
           <span className="font-medium">Remember Your Journey</span>
         </div>
-        <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">
+        <p className="text-white text-sm leading-relaxed">
           These insights are a compass for your healing journey, not absolute truth. Your emotional patterns are uniquely yours, 
           shaped by your experiences and resilience. Trust your inner wisdom, and use these insights to cultivate greater 
           self-compassion and inner peace. Every day brings new possibilities for growth and healing.
         </p>
-        <div className="mt-4 flex items-center text-xs text-[var(--color-accent)]">
+        <div className="mt-4 flex items-center text-xs text-white">
           <span className="mr-2">💝</span>
           <span>Generated with trauma-informed care and compassion</span>
         </div>
