@@ -87,6 +87,36 @@ Analyze the following JSON data. Your response MUST be in Markdown and STRICTLY 
 \"\"\"
 """
 
+ENHANCED_PROMPT_TEMPLATE = """
+You are "Aura," an expert data scientist specializing in personal informatics and well-being. Your task is to analyze emotional patterns and provide predictive insights.
+
+**Your Enhanced Analysis:**
+
+### Your Aura Report: Insights from the Past {X} Days
+
+**Emotional Weather Forecast (Next 7 Days):**
+* Based on detected patterns, predict mood/energy trends for each day next week
+* Include confidence levels (High/Medium/Low) for each prediction
+* Example: "Tuesday: Predicted mood dip (High confidence) - historical pattern shows 80% likelihood"
+
+**Pattern Strength Analysis:**
+* Rate each discovered pattern from 1-10 based on consistency and predictive power
+* Highlight your strongest behavioral patterns that could be leveraged
+
+**Personalized Intervention Recommendations:**
+* Suggest specific, actionable micro-interventions based on upcoming predicted dips
+* Include timing recommendations (e.g., "Schedule 15min nature walk Monday 2pm")
+
+**Risk & Opportunity Windows:**
+* Identify upcoming 48-72 hour periods of vulnerability or peak performance
+* Provide specific strategies for each window
+
+**Data Provided:**
+\"\"\"
+{jsonData}
+\"\"\"
+"""
+
 @app.post("/api/v1/analyze-patterns")
 async def analyze_patterns(request: AnalysisRequest):
     gemini_api_key = os.getenv("GEMINI_API_KEY")
