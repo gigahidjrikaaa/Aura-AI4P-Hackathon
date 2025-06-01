@@ -402,7 +402,7 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
           <span className="mr-2">🔮</span>
           Advanced Forecasting Models
         </h3>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-white">
           Need more data to generate reliable forecasting models. Continue tracking for sophisticated predictions!
         </p>
       </div>
@@ -411,12 +411,12 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
 
   return (
     <div className="glass p-6 rounded-xl glow-soft">
-      <h3 className="text-lg font-medium text-[var(--color-accent)] mb-4 flex items-center">
+      <h3 className="text-lg font-medium text-white mb-4 flex items-center">
         <span className="mr-2">🔮</span>
         Advanced Forecasting Models
       </h3>
       
-      <p className="text-sm text-[var(--color-text-secondary)] mb-6">
+      <p className="text-sm text-white mb-6">
         Multiple predictive models analyze your data using different mathematical approaches.
       </p>
 
@@ -478,7 +478,7 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
               <div className="space-y-1 text-xs">
                 {model.predictions.slice(0, 3).map((pred, i) => (
                   <div key={i} className="flex items-start justify-between">
-                    <span className="text-[var(--color-text-secondary]">
+                    <span className="text-[var(--color-text-secondary)]">
                       {pred.dayName}: {pred.reasoning}
                     </span>
                     <span className="text-[var(--color-accent)]">
@@ -493,8 +493,8 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
       </div>
 
       <div className="mt-6 p-4 bg-[var(--color-accent)] bg-opacity-5 rounded-lg border border-[var(--color-accent)] border-opacity-20">
-        <h4 className="text-sm font-medium text-[var(--color-text-primary)] mb-2">Understanding Forecast Models:</h4>
-        <div className="grid md:grid-cols-2 gap-4 text-xs text-[var(--color-text-secondary)]">
+        <h4 className="text-sm font-medium text-white mb-2">Understanding Forecast Models:</h4>
+        <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
           <div>
             <div className="flex items-center mb-1">
               <span className="mr-2">📈</span>
@@ -516,7 +516,7 @@ export default function AdvancedForecasting({ entries }: AdvancedForecastingProp
             </div>
           </div>
         </div>
-        <p className="text-xs text-[var(--color-text-secondary)] mt-2 italic">
+        <p className="text-xs text-white mt-2 italic">
           Higher accuracy models are more reliable. Compare multiple models for best insights.
         </p>
       </div>

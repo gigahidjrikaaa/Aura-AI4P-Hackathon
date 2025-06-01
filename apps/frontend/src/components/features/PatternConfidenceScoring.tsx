@@ -289,7 +289,7 @@ export default function PatternConfidenceScoring({ entries }: PatternConfidenceS
         Pattern Confidence Analysis
       </h3>
       
-      <p className="text-sm text-[var(--color-text-secondary)] mb-6">
+      <p className="text-sm text-[var(--color-text-primary)] mb-6">
         Statistical confidence levels for detected patterns. Higher confidence indicates more reliable insights.
       </p>
 
@@ -351,7 +351,7 @@ export default function PatternConfidenceScoring({ entries }: PatternConfidenceS
 
       <div className="mt-6 p-4 bg-[var(--color-accent)] bg-opacity-5 rounded-lg border border-[var(--color-accent)] border-opacity-20">
         <h4 className="text-sm font-medium text-[var(--color-text-primary)] mb-2">Understanding Confidence Levels:</h4>
-        <div className="grid md:grid-cols-2 gap-4 text-xs text-[var(--color-text-secondary)]">
+        <div className="grid md:grid-cols-2 gap-4 text-xs text-[var(--color-text-primary)]">
           <div>
             <div className="flex items-center mb-1">
               <span className="mr-2">🎯</span>

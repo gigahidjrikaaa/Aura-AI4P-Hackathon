@@ -104,7 +104,7 @@ export default function CorrelationMatrix({ entries }: CorrelationMatrixProps) {
         </table>
       </div>
       
-      <div className="mt-4 text-xs text-[var(--color-text-secondary)]">
+      <div className="mt-4 text-xs text-white">
         <p><strong>Reading:</strong> Values closer to ±1 indicate stronger correlations. Hover for details.</p>
       </div>
     </div>
