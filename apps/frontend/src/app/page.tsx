@@ -11,6 +11,8 @@ import MomentumIndicator from '@/components/features/MomentumIndicator';
 import SmartInterventions from '@/components/features/SmartInterventions';
 import MicroMomentCapture from '@/components/features/MicroMomentCapture';
 import DailyHealing from '@/components/features/DailyHealing';
+import PatternStrength from '@/components/features/PatternStrength';
+import EmotionalForecast from '@/components/features/EmotionalForecast';
 
 export default function Home() {
   const [entries, setEntries] = useLocalStorage<IEntry[]>('aura-entries', []);
@@ -174,6 +176,11 @@ export default function Home() {
         {/* Daily Healing Wisdom */}
         <DailyHealing />
 
+        {/* Pattern Strength Analysis */}
+        {entries.length >= 5 && (
+          <PatternStrength entries={entries} />
+        )}
+
         {/* Smart Interventions */}
         {entries.length > 0 && (
           <SmartInterventions 
@@ -181,6 +188,11 @@ export default function Home() {
             currentMood={currentMood} 
             currentEnergy={currentEnergy} 
           />
+        )}
+
+        {/* Emotional Forecast */}
+        {entries.length >= 7 && (
+          <EmotionalForecast entries={entries} />
         )}
 
         {/* Main Content Grid */}
